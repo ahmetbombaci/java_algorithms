@@ -8,13 +8,16 @@ public class BSTValidator {
 
 
 	private boolean isValid(BinaryTreeNode node, int minValue, int maxValue) {
+		
+		if(node.getValue()>minValue || node.getValue()<maxValue)
+			return false;
 
 		if(node.getLeft() != null) {
 			if(node.getLeft().getValue() >= node.getValue()) {
 				return false;
 			}
 			
-			if(!isValid(node.getLeft(), Integer.MIN_VALUE, node.getValue())) {
+			if(!isValid(node.getLeft(), minValue, node.getValue())) {
 				return false;
 			}
 		}
@@ -24,7 +27,7 @@ public class BSTValidator {
 				return false;
 			}
 			
-			if(!isValid(node.getRight(), node.getValue(), Integer.MAX_VALUE)) {
+			if(!isValid(node.getRight(), node.getValue(), maxValue)) {
 				return false;
 			}
 		}
