@@ -49,6 +49,51 @@ public class BitOperations {
 		}
 	}
 	
+	public int maxOneSequenceWithFlip(int input)
+	{
+		int num = input;
+		int prevCount=0;
+		int currCount=0;
+		boolean firstZero = true;
+		int max=0;
+		while(num!=0)
+		{
+			if((num & 1) == 1)
+			{
+				firstZero = true;
+				currCount++;
+			}
+			else
+			{
+				if(firstZero) {
+					int localMax= prevCount + 1 + currCount;
+					max = Math.max(max,  localMax);
+					prevCount = currCount;
+					currCount = 0;
+					firstZero = false;
+				}
+				else {
+					prevCount = 0;
+				}
+			}
+			
+			num = num >>> 1;
+		}
+		
+		int extraBit=0;
+		if(input<0) {
+			extraBit = (prevCount==0 ? 0 : 1 );
+		}
+		else {
+			extraBit = 1;
+		}
+		
+		int localMax= prevCount + extraBit + currCount;
+		max = Math.max(max,  localMax);
+		
+		return max;
+	}
+	
 	public static void main(String[] args) 
 	{
 		BitOperations bits = new BitOperations();
@@ -65,7 +110,21 @@ public class BitOperations {
 		bits.displayBits(result);
 		*/
 		
-		bits.displayBits(0.125);
+		// bits.displayBits(0.125);
+
+		System.out.println(bits.maxOneSequenceWithFlip(-1));
+		System.out.println(bits.maxOneSequenceWithFlip(0));
+		System.out.println(bits.maxOneSequenceWithFlip(1));
+		System.out.println(bits.maxOneSequenceWithFlip(2));
+		System.out.println(bits.maxOneSequenceWithFlip(3));
+		System.out.println(bits.maxOneSequenceWithFlip(4));
+		System.out.println(bits.maxOneSequenceWithFlip(5));
+		System.out.println(bits.maxOneSequenceWithFlip(6));
+		System.out.println(bits.maxOneSequenceWithFlip(7));
+		System.out.println(bits.maxOneSequenceWithFlip(8));
+		System.out.println(bits.maxOneSequenceWithFlip(1775));
+		
+		
 		
 	}
 }
